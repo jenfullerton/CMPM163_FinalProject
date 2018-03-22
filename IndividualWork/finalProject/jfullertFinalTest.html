@@ -1,0 +1,67 @@
+<!-- Jennifer Fullerton			-->
+<!-- CMPM 163, Final Project	-->
+<!-- February 16, 2018			-->
+<!-- jfullertFinalTest.html		-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>jfullert - HW2A </title>
+	<meta charset="utf-8">
+	<style>
+		body {
+			margin: 0px;
+			overflow: hidden;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="container"></div>
+
+	<!-- load external libraries -->
+	<script type="text/javascript" src="lib/three.min.js"></script>
+	<script type="text/javascript" src="lib/OrbitControls.js"></script>
+	<script type="text/javascript" src="lib/engine.js"></script>
+
+	<!-- Lucas's engine, shaders, and objects -->
+	<script type="text/javascript" src="js/simpleBoxObj.js"></script>
+	<script type="text/javascript" src="js/simpleSphereObj.js"></script>
+	<script type="text/javascript" src="shaders/jfTestShaders.js"></script>
+
+	<!-- main -->
+	<script type="text/javascript">
+		// 0.0 - whatever this line means
+		var container = document.getElementById('container');
+
+		// 0. Create a renderer
+		var renderer = new THREE.WebGLRenderer();
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		document.body.appendChild(renderer.domElement);
+
+		// 1.0 Create a Scene
+		var scene = new THREE.Scene();
+		// 1.1 Set up Camera
+		var camera = new THREE.PerspectiveCamera(50.0, window.innerWidth/window.innerHeight, 0.1, 1000);
+		// 1.2 Camera Orbit Controls using OrbitControls library
+		var controls = new THREE.OrbitControls( camera );
+		camera.position.z = 5;
+		camera.position.y += 3;
+		controls.update();
+
+		// 2. Create objects in scene
+		// 2.1 Create a Sphere
+		var sphere = createSphere(1.0);
+		scene.add(sphere);
+		// 2.2 Create a Box
+		var box = createBox(1.5);
+		scene.add(box);
+
+		// 3. Set up and start the engine
+		CMENGINE.Start(scene, renderer, camera);
+		CMENGINE.Update();
+
+	</script>
+
+</body>
+</html>
