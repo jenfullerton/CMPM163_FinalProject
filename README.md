@@ -5,7 +5,7 @@ Final Project for Computer Game Graphics w/ Angus Forbes, starring Lisa Durand, 
 
 ### Final Group Collaboration
 
-([source](https://www.google.com))</small>  
+Link to the webpage. ([source](https://www.google.com))</small>  
   _Despriction for out final combined project and how to make the webpage work. Also needs a link to the html file that runs this page._
 
 Slides for our in-class presentation.([source](https://docs.google.com/presentation/d/17jqcwxLjDDPo3E5A8rVEcFwYzdvr0abvMZQhG1RgUuk/edit?usp=sharing))</small>  
