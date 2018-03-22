@@ -5,7 +5,7 @@ Final Project for Computer Game Graphics w/ Angus Forbes, starring Lisa Durand, 
 
 ### Final Group Collaboration
 
-Link to the webpage. ([source](https://jenfullerton.github.io/CMPM163_FinalProject/))</small>  
+Link to the webpage. ([source](https://jenfullerton.github.io/CMPM163_FinalProject))</small>  
   _Despriction for our final combined project and how to make the webpage work. Also needs a link to the html file that runs this page._
 
 Slides for our in-class presentation.([source](https://docs.google.com/presentation/d/17jqcwxLjDDPo3E5A8rVEcFwYzdvr0abvMZQhG1RgUuk/edit?usp=sharing))</small>  
@@ -17,8 +17,8 @@ Lisa Durand:
 
 Jenny Fullerton:
 ([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/JennysFinalProject/jfullertFinalTest.html))</small> 
-  _Despriction for Jenny's work here. Also needs working link._
+  _Despriction for Jenny's work here._
 
 Joshua Navarro:
-([source](https://www.google.com))</small>  
-  _Post processing effects that get applied to an object. Includes different effects such as greyscale, sepia, and a dot matrix like grid along with others. Also needs working link._
+([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/NavarroFinalProject/FinalProject/pages/finalIndex.html))</small>  
+  _Post processing effects that get applied to an object. Includes different effects such as greyscale, sepia, and a dot matrix like grid along with others._
