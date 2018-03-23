@@ -6,7 +6,9 @@ var jfCircVert = `
 	precision mediump float;
 
 	// *** RAW SHADER GEOMETRY AND CAMERA UNIFORMS *** //
-	//		i.e., I Don't Understand Anything Apparently
+	// if using RawShaderMaterial, we need these uniforms
+	// otherwise, okay to delete
+
 	// camera uniforms
 	uniform mat4 modelMatrix;
 	uniform mat4 viewMatrix;
@@ -15,15 +17,14 @@ var jfCircVert = `
 	attribute vec3 position;
 	attribute vec3 normal;
 
-	// *** LIGHTING UNIFORMS *** //
+	// *** LIGHTING *** //
 	// light uniforms
-	uniform vec3 light1_pos;
+	const vec3 light1_pos = vec3(0.0, 10.0, 1.0);
+	const vec3 light2_pos = vec3(5.0, 5.0, 5.0);
+
 	// fragment shader variables
 	varying vec3 v_pos;
 	varying vec3 N, L1, L2, V;
-
-	// second set of lights 
-	vec3 light2_pos = vec3 (5.0, 5.0, 5.0);
 
 
 	void main()
@@ -37,21 +38,17 @@ var jfCircVert = `
 		// send position info to frag shader
 		v_pos = pos.xyz;
 
-		// convert light coordinates from world to camera
+		// * convert light coordinates from world to camera
 		// 		LIGHT 1
 		vec4 L1_cam = viewMatrix * vec4(light1_pos, 1.0);
 		// calculate normalized light direction vector
 		L1 = vec3(normalize( L1_cam - pos ).xyz);
-		
 		//		LIGHT 2
 		vec4 L2_cam = viewMatrix * vec4(light2_pos, 1.0);
 		L2 = vec3(normalize( L2_cam - pos ).xyz);
 
 		// calculate view vector from position
 		V = normalize(-v_pos);
-
-		// this makes it...stretch
-		// v_pos = vec3(projectionMatrix * vec4(v_pos, 1.0)).xyz;
 
 		// cool
 		gl_Position = projectionMatrix * pos;
@@ -60,153 +57,130 @@ var jfCircVert = `
 var jfCircFrag = `
 	precision mediump float;
 
-	// uniforms
-	uniform vec3 ambient;
-	uniform vec3 light1_diffuse;
-	uniform vec3 light1_specular;
-
-	// lights 2
-	vec3 kd2 = vec3(0.0, 0.0, 0.9);  // dull diffuse
-	vec3 ks2 = vec3(0.0, 1.0, 1.0);  // teal specular
-
-	// scalars and powers
-	const float spec_intensity = 2.0;
-	float radius = 1.0;
-
-	// resolution
-	uniform float resX;
-	uniform float resY;
-
-	// varyings
+	// * VARYINGS * //
 	varying vec3 v_pos;
 	varying vec3 N, L1, L2, V;
+
+	// * LIGHTING CONSTANTS * //
+	const vec3 ambient = vec3(0.1);
+		// DIFFUSE - Phong Model
+	const vec3 kd1 = vec3(1.0, 0.0, 0.0);	// light 1 diffuse color
+	const vec3 kd2 = vec3(0.0, 0.0, 0.9);	// light 2 diffuse color
+
+		// SPECULAR - Phong Model
+	const vec3 ks1 = vec3(1.0, 1.0, 0.0);	// light 1 spec color
+	const vec3 ks2 = vec3(0.0, 1.0, 1.0); 	// light 2 spec color
+	const float spec_intensity = 2.5;		// specular gloss
+
+		// STYLE MODIFIERS
+	const float radius = 1.0;	// specular highlight radius
+		// controls for drawing specular halftone dots
+	float cx, sy, ksModifier, rad1, rad2;
+
+
+	// *** FUNCTIONS - JENNY *** //
+
+	//*	compDiffuse()
+	//	calculates the stylized diffuse based on the Phong
+	//		lighting model.
+	//	return: vec3(diffuse.rgb)
+	vec3 compDiffuse(vec3 L, vec3 KD){
+
+		vec3 diffuseRGB = vec3(0.0);
+		float cx, sy;
+
+		// calculate angle between light and vertex normal
+		float diff1 = max(0.0, dot(N, L));
+
+		// create toon shading using thresholds
+		for(float i = 0.0; i<=1.0; i+= 0.1){
+			if(diff1 >= i){
+				cx = cos(gl_FragCoord.x);
+				sy = sin(gl_FragCoord.y);
+
+				// use cx sy to create halftone pattern
+				if( cx*cx + sy*sy >= diff1 ){
+					// use threshold (i) as diffuse value
+					diffuseRGB = vec3(KD * i);
+				}
+			}
+		}
+		
+		return diffuseRGB;
+
+	}
+
+	//* compSpecular()
+	//	calculates the stylized specular based on the Phong
+	//		lighting model.
+	//	return: vec3(specular.rgb)
+	vec3 compSpecular(vec3 L, vec3 KS)
+	{
+		vec3 specRGB = vec3(0.0);
+		float cx, sy;
+
+		// N and V constant
+		vec3 R = normalize( reflect(-L,N) );
+		
+		// find dot product between reflection and view
+		float S;
+		float RdotN = dot(R, V);
+
+		// if positive, then calculate normally
+		if(RdotN >= 0.0){
+			S = pow( max(dot(R,V), 0.0), spec_intensity );
+		}
+		// if dot product is negative, then weird specular
+		else {
+			// negate the dot product so it returns as a "max"
+			S = pow( max(-dot(R,V), 0.0), spec_intensity );
+			S = -S;	// negate specular
+		}
+
+		// adjust radius based on specular
+		float rad = radius * S;
+
+		// normal specular
+		if (S > 0.0){
+			cx = cos(gl_FragCoord.x)*rad;
+			sy = sin(gl_FragCoord.y)*rad;
+
+			// smaller threshold = less visible
+			// relate to spec intensity?
+
+			if( cx*cx +  sy*sy >= rad )
+				specRGB += vec3( KS * S);
+		} 
+		// "negative" specular
+		if (S < 0.0){
+			rad = -rad;
+
+			cx = cos(gl_FragCoord.x)*rad;
+			sy = sin(gl_FragCoord.y)*rad;
+
+			if( cx*cx +  sy*sy >= rad )
+				specRGB += vec3( KS * S);
+		}
+
+		return specRGB;
+	}
+
 
 	void main()
 	{
 		// default light = 0.0
 		vec4 outColor1 = vec4(ambient, 1.0);
 
-		// *** DIFFUSE *** //
-		// calculate diffuse for light 1
-		// calculate angle between light and vertex normal
-		float diff1 = max(0.0, dot(N, L1));
-		outColor1 += vec4((diff1 * light1_diffuse), 1.0);
-
-		// light 2
-		float diff2 = max(0.0, dot(N, L2));
-		outColor1 += vec4((diff2 * kd2), 1.0);
-
-		// *** SPECULAR *** //
-		// calculate reflection vector
-		vec3 R = normalize( reflect(-L1,N) );
+		// DIFFUSE
+		vec3 diff1 = compDiffuse(L1, kd1);
+		vec3 diff2 = compDiffuse(L2, kd2);
+		outColor1 += vec4(diff1 + diff2, 1.0);
 		
-		float S; // = pow( max( dot(R,V),0.0), spec_intensity );
-		float RdotN = dot(R,V);
-		// weird specular
-		if(RdotN >= 0.0){
-			S = pow( max(dot(R,V), 0.0), spec_intensity );
-		}
-		// weird specular
-		else {
-			S = pow( max(-dot(R,V), 0.0), spec_intensity );
-			S = -S;
-		}
+		// SPECULAR CIRCLES
+		vec3 specRes1 = compSpecular(L1, ks1);
+		vec3 specRes2 = compSpecular(L2, ks2);
 
-
-		// light 2
-		vec3 R2 = normalize( reflect(-L2,N) );
-		// set up specular
-		float S2; // = pow( max(dot(R2,V), 0.0), spec_intensity );
-		float R2dotN = dot(R2, V);
-
-		// normal specular
-		if(R2dotN >= 0.0){
-			S2 = pow( max(dot(R2,V), 0.0), spec_intensity );
-		}
-		// weird specular
-		else {
-			S2 = pow( max(-dot(R2,V), 0.0), spec_intensity );
-			S2 = -S2;
-		}
-
-		// add contribution from specular
-		// outColor1 += vec4( ks2 * S2, 1.0 );
-
-		// change radius based on specular intensity
-		float rad1 = radius * S;
-		float rad2 = radius * S2;
-
-
-		/* this would look good if i could figure out WHERE
-		 the point is
-		// draw a circle around something
-		float dist = length( v_pos.xy );
-		if (dist <= radius){
-			outColor1 += vec4(light1_specular*S*0.3, 1.0);
-		}
-		*/
-
-
-		// MAKE THEM 'CIRCLES'
-		float cx, sy;
-
-
-		// normal specular
-		// light 1
-		if ( S > 0.0 ){
-			cx = cos(gl_FragCoord.x)*rad1;
-			sy = sin(gl_FragCoord.y)*rad1;
-
-			// smaller threshold = less visible
-			// relate to spec intensity?
-
-			if( cx*cx + sy*sy >= rad1 ){
-				outColor1 += vec4( light1_specular * S, 1.0 );
-			}
-		}
-
-		// light 1 - "negative" specular
-		if (S < 0.0){
-			rad1 = -rad1;	// make it a positive number
-			rad1 /= 1.3;	// limit range of radius
-
-			cx = cos(gl_FragCoord.x)*rad1;
-			sy = sin(gl_FragCoord.y)*rad1;
-
-			if( cx*cx +  sy*sy >= rad1 ){
-				outColor1 += vec4( light1_specular * S, 1.0 );
-			}
-		}
-
-		// light 2
-		if (S2 > 0.0){
-			cx = cos(gl_FragCoord.x)*rad2;
-			sy = sin(gl_FragCoord.y)*rad2;
-
-			// smaller threshold = less visible
-			// relate to spec intensity?
-
-			if( cx*cx +  sy*sy >= rad2 ){
-				outColor1 += vec4( ks2 * S2, 1.0 );
-			}
-		} 
-
-		// "negative" specular
-		if (S2 < 0.0){
-			rad2 = -rad2;
-			rad2 /= 1.3;	// limit range of radius
-
-			cx = cos(gl_FragCoord.x)*rad2;
-			sy = sin(gl_FragCoord.y)*rad2;
-
-			// smaller threshold = less visible
-			// relate to spec intensity?
-
-			if( cx*cx +  sy*sy >= rad2 ){
-				outColor1 += vec4( ks2 * S2, 1.0 );
-			}
-		} 
-
+		outColor1 += vec4(specRes1 + specRes2, 1.0);
 
 		gl_FragColor = outColor1;
 	}`;
