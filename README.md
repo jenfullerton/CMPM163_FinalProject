@@ -11,6 +11,8 @@ Link to the html file directly. ([source](https://jenfullerton.github.io/CMPM163
 
 Slides for our in-class presentation.([source](https://docs.google.com/presentation/d/17jqcwxLjDDPo3E5A8rVEcFwYzdvr0abvMZQhG1RgUuk/edit?usp=sharing))</small>  
 
+Video Demonstration can be found here: ([source](https://youtu.be/TqmUfhQraVk))</small>
+
 ### Individual Works
 Lisa Durand:
 ([source](https://www.google.com))</small>  
