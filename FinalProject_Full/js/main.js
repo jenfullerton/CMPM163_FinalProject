@@ -46,71 +46,22 @@ function init()
 	// INITIALIZE OFFSCREEN BUFFER
 	init_BufferScene();
 	
-
-	
 	//This is a comment!!!
 	///////////
-	// VIDEO //
+	// MOVIE //
 	///////////
 	
-	/*
-	// create the video element
-	video = document.createElement( 'video' );
-	video.id = 'video';
-	video.type="video/mp4";
-	video.type = ' video/mp4; codecs="theora, vorbis" ';
-	video.src = "videos/jojoOpening.mp4";
-	video.load(); // must call after setting/changing source
-	video.play();
-	*/
-	
-	// alternative method -- 
-	// create DIV in HTML:
-	// <video id="myVideo" autoplay style="display:none">
-	//		<source src="videos/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'>
-	// </video>
-	// and set JS variable:
-	// video = document.getElementById( 'myVideo' );
-	
+	// Set up Movie and Colored Material Parameters
 	videoImage = document.createElement( 'canvas' );
-	
 	videoImage.width = 1280;
 	videoImage.height = 720;
-	
-	/*
-	var videoImage = {
-		width:	1280,
-		height:	720
-	};
-	*/ 
-
-/*
-	videoImageContext = videoImage.getContext( '2d' );
-	// background color if no video present
-	videoImageContext.fillStyle = '#000000';
-	videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
-
-	videoTexture = new THREE.Texture( videoImage );
-	videoTexture.minFilter = THREE.LinearFilter;
-	videoTexture.magFilter = THREE.LinearFilter;
-*/
-	
-
-
-	//Fix this to be my own texture things.
-	//var movieMaterial = new THREE.MeshBasicMaterial( {color:0xff0000, map: videoTexture, side:THREE.DoubleSide } );
-
-
-	// var texture = new THREE.TextureLoader().load( 'angus.jpg' );
 	var customColor=new THREE.Vector3(0.0,1.0,1.0);
 	var textureDimentions = 1024;
 
 
-	// ***  I THINK THIS IS IT?
-	//	set offscreen buffer as texture
-	//var movieMaterial = createColoredMaterial(videoTexture,new THREE.Vector2(videoImage.width,videoImage.height),customColor,draw.currentEffect,10.0);
-	var movieMaterial = createColoredMaterial({map:bufferObject.texture},new THREE.Vector2(videoImage.width,videoImage.height),customColor,draw.currentEffect,10.0);
-	//var movieMaterial = new THREE.MeshBasicMaterial({map:bufferObject.texture});
+	// CREATE MOVIE
+	//	set offscreen buffer as texture to render instead of videos
+	var movieMaterial = createColoredMaterial(bufferObject.texture,new THREE.Vector2(videoImage.width,videoImage.height),customColor,draw.currentEffect,10.0);
 
 	// the geometry on which the movie will be displayed;
 	// 		movie image will be scaled to fit these dimensions.
@@ -142,20 +93,12 @@ function update()
 
 function render() 
 {	
-	
-	
-	/*
-	if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
-	{
-		videoImageContext.drawImage( video, 0, 0 );
-		if ( videoTexture ) 
-			videoTexture.needsUpdate = true;
-	}
-	*/
 
-	// render the buffer scene
+	// render and update the buffer scene
 	render_BufferScene();
 	
+	// render the main scene
+	renderer.setClearColor(0xcccccc)
 	renderer.render( scene, camera );
 }
 

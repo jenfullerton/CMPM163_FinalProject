@@ -15,8 +15,8 @@ function init_BufferScene() {
 
 	console.log("init_BufferScene");
 
-	var vs = jfCircVert;
-	var fs = jfCircFrag;
+	// var vs = jfCircVert;
+	// var fs = jfCircFrag;
 
 	// container = document.getElementById( 'container' );
 
@@ -30,37 +30,49 @@ function init_BufferScene() {
 
 	bufferMaterial = new THREE.RawShaderMaterial({
 		uniforms: 		geo_uniforms,
-		vertexShader:	vs,
-		fragmentShader:	fs
+		vertexShader:	jfCircVert,
+		fragmentShader:	jfCircFrag
 	});
 
 	bufferMesh1 = new THREE.Mesh( bufferGeometry1, bufferMaterial );
-	bufferMesh1.translateX(-2.5);
+	bufferMesh1.translateX(1.0);
+	bufferMesh1.translateY(-3.14/2.0);
 	bufferScene.add( bufferMesh1 );
 
 	bufferMesh2 = new THREE.Mesh( bufferGeometry2, bufferMaterial );
 	bufferMesh2.translateX(0.0);
 	bufferScene.add( bufferMesh2 );
 
+	bufferCamera.position.z = 7;
+
 }
 
 // animate_BufferScene()
-// not sure if we need this one
-// called by animate
-function animate_BufferScene() {
-
-}
-
-// called by update
+// called by render_BufferScene()
+// ****************************************************//
+//		put animations here?
+// ****************************************************//
 function update_BufferScene() {
+
+	var time = performance.now();
+
+	//rotate the geometry in the scene that is rendered to the texture
+	bufferMesh1.position.x += (Math.cos(time * 0.0005)/20.0);
+	bufferMesh1.position.y += (Math.sin(time * 0.0005)/20.0);
+
+	//rotate the geometry in the scene that is rendered to the texture
+	bufferMesh2.rotation.x = time * 0.00005;
+	bufferMesh2.rotation.y = time * 0.0005;
 
 }
 
 // called by render
 function render_BufferScene() {
-	console.log("render_BufferScene");
 
 	//render onto our off-screen texture (our FBO)
-	renderer.setClearColor( 0xCCCCCC );
+	renderer.setClearColor( 0x333333 );
 	renderer.render(bufferScene,bufferCamera,bufferObject);
+
+	// update animations for this buffer scene
+	update_BufferScene();
 }
