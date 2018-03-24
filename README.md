@@ -15,12 +15,12 @@ Video Demonstration can be found here: ([source](https://youtu.be/TqmUfhQraVk))<
 
 ### Individual Works
 Lisa Durand:
-([source](https://www.google.com))</small>  
-  _Despriction for Lisa's work here. Also needs working link._
+([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/LisasFinalProjectWork/LisasFinal/FinalProject.html))</small>  
+  _Despriction for Lisa's work here._
 
 Jenny Fullerton:
 ([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/JennysFinalProject/jfullertFinalTest.html))</small> 
-  _Despriction for Jenny's work here._
+  _Renders geometry with a halftone-dot pattern using gl_FragCoord and the Phong lighting model._
 
 Joshua Navarro:
 ([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/NavarroFinalProject/FinalProject/pages/finalIndex.html))</small>  
