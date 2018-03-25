@@ -14,7 +14,9 @@ Direct link to Final Project Demo. ([source](https://jenfullerton.github.io/CMPM
       - Change camera view angle: Right Mouse Button (RMB) click and drag.
       - Pan camera: Left Mouse Button (LMB) click and drag.
 
-Slides for our in-class presentation.([source](https://docs.google.com/presentation/d/17jqcwxLjDDPo3E5A8rVEcFwYzdvr0abvMZQhG1RgUuk/edit?usp=sharing))</small>  
+Slides for our in-class presentation.([source](https://docs.google.com/presentation/d/17jqcwxLjDDPo3E5A8rVEcFwYzdvr0abvMZQhG1RgUuk/edit?usp=sharing))</small>
+
+Link to SIGGRAPH Paper ([source](https://drive.google.com/file/d/13ALctJh0dI7tDU_YAxgeL4gYy6Dg-rti/view?usp=sharing)) _Note: this is also in our GitHub repository._</small>
 
 Demo video for Jenny's Code under Post Processing Effects: ([source](https://youtu.be/TqmUfhQraVk))</small>
 
@@ -26,8 +28,8 @@ Lisa Durand:
   _Keyframe interpolation for animating 3D models._
 
 Jenny Fullerton:
-([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/JennysFinalProject/jfullertFinalTest.html))</small> 
-  _Renders geometry with a halftone-dot pattern using gl_FragCoord and the Phong lighting model._
+([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/JennysFinalProject/jfullertFinalTest.html))</small>
+_Renders geometry with a halftone-dot pattern using gl_FragCoord and the Phong lighting model._
 
 Joshua Navarro:
 ([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/NavarroFinalProject/FinalProject/pages/finalIndex.html))</small>  
