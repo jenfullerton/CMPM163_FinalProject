@@ -53,8 +53,8 @@ function init()
 	
 	// Set up Movie and Colored Material Parameters
 	videoImage = document.createElement( 'canvas' );
-	videoImage.width = 1280;
-	videoImage.height = 720;
+	videoImage.width = window.innerWidth;
+	videoImage.height = window.innerHeight;
 	var customColor=new THREE.Vector3(0.0,1.0,1.0);
 	var textureDimentions = 1024;
 
@@ -65,7 +65,11 @@ function init()
 
 	// the geometry on which the movie will be displayed;
 	// 		movie image will be scaled to fit these dimensions.
+
+	// note sure.... how to fix resolution issue
+	
 	var movieGeometry = new THREE.PlaneGeometry( 320, 180, 4, 4 );
+	// var movieGeometry = new THREE.PlaneGeometry( videoImage.width, videoImage.height, 32, 32 );
 	var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
 	movieScreen.position.set(0,0,0);
 	movieScreen.name="MovieScreen";
@@ -98,7 +102,7 @@ function render()
 	render_BufferScene();
 	
 	// render the main scene
-	renderer.setClearColor(0xcccccc)
+	renderer.setClearColor(0x000000)
 	renderer.render( scene, camera );
 }
 
