@@ -1,4 +1,4 @@
-Final Project for Computer Game Graphics w/ Angus Forbes, starring Lisa Durand, Jennifer Fullerton, and Joshua Navarro
+Final Project for Computer Game Graphics w/ Angus Forbes, starring Lisa Durand (ldurand@ucsc.edu), Jennifer Fullerton (jfullert@ucsc.edu), and Joshua Navarro (joanavar@ucsc.edu)
 
 ## CMPM163_FinalProject
 
