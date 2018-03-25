@@ -22,7 +22,7 @@ Demo video for Lisa's Code under Post Processing Effects: ([source](https://yout
 
 ### Individual Works
 Lisa Durand:
-([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/LisasFinalProjectWork/LisasFinal/FinalProject.html))</small>  
+([source](https://jenfullerton.github.io/CMPM163_FinalProject/IndividualWork/LisasFinalProjectWork/LisasFinal/FinalProject1.html))</small>  
   _Keyframe interpolation for animating 3D models._
 
 Jenny Fullerton:
