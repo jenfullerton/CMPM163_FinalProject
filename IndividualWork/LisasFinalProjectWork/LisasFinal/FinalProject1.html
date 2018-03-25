@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 <!--        code taken from three.js example animation - rigging - skinning-->
-		<title>FinalProject</title>
+		<title>FinalProject1</title>
 		<meta charset = "utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -38,7 +38,7 @@
             
             var character;
             var light;
-            var textureLoader = new THREE.TextureLoader();
+            //var textureLoader = new THREE.TextureLoader();
             var loader = new THREE.JSONLoader();
             var isLoaded = false;
             var action = {}, mixer;
@@ -76,7 +76,7 @@
                 light = new THREE.AmbientLight(0xffffff, 1);
                 scene.add(light);
                 
-                loader.load('fredrick3.json', function(geometry, materials){
+                loader.load('fredrick4.json', function(geometry, materials){
                     materials.forEach(function(material){
                         material.skinning = true;
                     });
@@ -86,6 +86,9 @@
                 );
                     
                 mixer = new THREE.AnimationMixer(character);
+                
+                //action = {}, mixer;
+                //console.log(action, mixer);
                     
                 action.flip = mixer.clipAction(geometry.animations[0]);
                 action.punch = mixer.clipAction(geometry.animations[2]);
@@ -97,11 +100,11 @@
             
                 action.wave.reset();
                 action.flip.reset();
-                //action.punch.reset();
+                action.punch.reset();
                     
                 
-                action.wave.setLoop(THREE.LoopRepeat, 100);
-                action.wave.clampWhenFinished = true;
+                action.flip.setLoop(THREE.LoopRepeat, 100);
+                action.flip.clampWhenFinished = true;
 
                 action.wave.enabled = true;
                 action.flip.enabled = true;
@@ -110,15 +113,15 @@
                 scene.add(character);
                 
                 window.addEventListener('resize', onWindowResize, false);
-                window.addEventListener('click', onDoubleClick, false);
+                //window.addEventListener('click', onDoubleClick, false);
                 console.log('Double click to change animation');
                 animate();
                     
                 isLoaded = true;
                 
-                action.wave.play();
-                console.log("isrunning " + action.wave.isRunning());
-                console.log("action[flip] " + action["wave"]);
+                action.flip.play();
+                console.log("isrunning " + action.flip.isRunning());
+                console.log("action[flip] ", action["flip"]);
                 
                     
                 mixer.addEventListener('loop', function(e){
@@ -131,6 +134,7 @@
                 });
             }             
                 
+            
             function fadeAction (name) {
               //THIS IS WHERE THE PROBLEM IS. ACTIVEACTIONNAME IS WAVECYCLE, BUT ACTION[WAVECYCLE] IS UNDEFINED
               console.log("activeActionName " + activeActionName);
@@ -151,6 +155,7 @@
               activeActionName = name;
 
             }
+            
 
             function onWindowResize () {
               camera.aspect = window.innerWidth / window.innerHeight;
@@ -158,7 +163,8 @@
 
               renderer.setSize(window.innerWidth, window.innerHeight);
             }
-
+            
+            
             var mylatesttap;
             function onDoubleClick () {
               var now = new Date().getTime();
@@ -169,7 +175,7 @@
                 } else {
                   actualAnimation++;
                 }
-                fadeAction(arrAnimations[actualAnimation]);
+                //fadeAction(arrAnimations[actualAnimation]);
                 console.log("actualanimation " + arrAnimations[actualAnimation]);
 
               } else {
@@ -179,6 +185,7 @@
               mylatesttap = new Date().getTime();
 
             }
+            
 
             function animate () {
               requestAnimationFrame(animate);
