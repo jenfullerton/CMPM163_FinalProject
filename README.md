@@ -17,6 +17,7 @@ Direct link to Final Project Demo. ([source](https://jenfullerton.github.io/CMPM
 Slides for our in-class presentation.([source](https://docs.google.com/presentation/d/17jqcwxLjDDPo3E5A8rVEcFwYzdvr0abvMZQhG1RgUuk/edit?usp=sharing))</small>  
 
 Demo video for Jenny's Code under Post Processing Effects: ([source](https://youtu.be/TqmUfhQraVk))</small>
+
 Demo video for Lisa's Code under Post Processing Effects: ([source](https://youtu.be/baPAJ2B4WJs))</small>
 
 ### Individual Works
