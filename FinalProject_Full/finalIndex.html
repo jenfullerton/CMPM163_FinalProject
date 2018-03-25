@@ -4,15 +4,32 @@
 	<title>Video Texture (Three.js)</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+			body {
+				background:#777;
+				padding:0;
+				margin:0;
+				overflow:hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				color: #ffffff;
+			}
+		</style>
 </head>
 <body>
-
 
 <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
 <script src="js/three.js"></script>
 <script src="js/Materials/ColorModifierMaterial.js"></script>
 <script src="js/shaders/preProcessingVF.js"></script>
 <script src="js/bufferScene.js"></script>
+<script src="js/Detector.js"></script>
+<script src="js/OrbitControls.js"></script>
+<script src="js/dat.gui.min.js"></script>
 <script src="js/main.js"></script>
 
 </body>
