@@ -1,0 +1,42 @@
+/* CSS for Final Project
+Jennifer Fullerton
+Lisa Durand
+Joshua Navarro
+*/
+
+
+body {
+    /* background-color: rgb(53,51,62); */
+}
+
+p {
+    text-align: left;
+    font-family:  book antiqua, serif;
+    font-size: 18px;
+    max-width: 550px;
+    padding-bottom: 25px;
+    margin:auto;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(100, 50, 200);
+    font-style: italic;
+}
+
+
+h1 {
+	text-align: left;
+    font-family:  book antiqua, serif;
+    font-size: 24px;
+    max-width: 550px;
+    padding-bottom: 25px;
+    margin:auto;
+}
+
+img {
+	display: block;
+	margin: auto;
+	max-width: 900px;
+	height: auto;
+}
